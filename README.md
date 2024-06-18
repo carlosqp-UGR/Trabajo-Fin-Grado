@@ -30,6 +30,6 @@ Tras esto, acceder a http://localhost:3000 (o el puerto que se haya definido en 
 
 ## Autor
 
-Carlos Quesada Pérez
-Grado en Ingeniería Informática, Curso 2023-24  
-Universidad de Granada
+Carlos Quesada Pérez <br />
+Grado en Ingeniería Informática, Curso 2023-24  <br />
+Universidad de Granada <br />

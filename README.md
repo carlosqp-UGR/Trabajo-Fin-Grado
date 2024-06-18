@@ -10,17 +10,17 @@ La aplicación es una aplicación de gestión para la empresa Andres Quesada e H
 
 Para lanzar el proyecto, primero se debe construir la imagen de la aplicación con el nombre `ansada-app`, y después lanzar Docker Compose. Las variables de entorno ya están definidas en el Docker Compose para la conexión de la aplicación y la base de datos.
 
-_Construir imagen de la aplicación_
+**Construir imagen de la aplicación**
 
     docker build -t ansada-app .
 
-_Lanzar Docker Compose_
+**Lanzar Docker Compose**
 
     docker-compose up -d
 
 Tras esto, acceder a http://localhost:3000 (o el puerto que se haya definido en Docker Compose) y entrar con las credenciales `admin` / `admin` para acceder como administrador o `usuario` / `passwd` para acceder como un usuario genérico.
 
-_Nota:_ Si se desea probar la funcionalidad de pruebas, acceder a la imagen corriendo de la aplicación de Node.js y desde el directorio donde se encuentra el `package.json` lanzar:
+**Nota:** Si se desea probar la funcionalidad de pruebas, acceder a la imagen corriendo de la aplicación de Node.js y desde el directorio donde se encuentra el `package.json` lanzar:
 
     # Para ejecutar pruebas unitarias
     npm run unit-test
@@ -31,4 +31,5 @@ _Nota:_ Si se desea probar la funcionalidad de pruebas, acceder a la imagen corr
 ## Autor
 
 Carlos Quesada Pérez
-Grado en Ingeniería Informática, curso 2023-24, Universidad de Granada.
+Grado en Ingeniería Informática, Curso 2023-24  
+Universidad de Granada

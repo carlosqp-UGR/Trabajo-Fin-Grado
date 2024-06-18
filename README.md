@@ -1,4 +1,4 @@
-# Trabajo-Fin-Grado
+# Trabajo Fin Grado
 
 
 Este repositorio contiene una demo del proyecto final de grado del alumno Carlos Quesada Pérez. Consiste en un proyecto en Docker Compose con dos servicios: la base de datos (utilizando la imagen oficial de MariaDB), inicializada con datos de demostración (en la carpeta `/database`) y dos usuarios por defecto, y la aplicación (utilizando una imagen propia). Las credenciales de acceso se definen como variables de entorno en el Docker Compose y pueden ser modificadas allí.

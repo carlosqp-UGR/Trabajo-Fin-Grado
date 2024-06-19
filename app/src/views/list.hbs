@@ -1,0 +1,141 @@
+<!-- Render variables:
+    - title
+    - target (example: /clientes/id)
+    - search_field_options (array)
+    - button
+    - columns (array)
+    - data (array)
+    - search_field
+    - search_query
+    - page
+    - view
+    - search_suggestinos (modified via AJAX)
+--> 
+    <main class="container">
+    <h1 class="my-5 py-1 ms-3">{{title}}</h1> 
+    <div class="container">
+        <form id="params" method="GET">
+            <div class="row justify-content-between my-3">
+                <div class="col-lg-6 order-2 order-lg-1 py-3">
+                    <div class="row">
+                        <div class="col-auto">
+                            <select class="form-select" name="search_field" id="search_field">
+                                {{#each search_field_options}}
+                                    {{#unless (eq this 'id')}}
+                                    <option value="{{this}}" {{#eq ../search_field this}} selected {{/eq}}>
+                                    {{replace (uppercase this) "_" " "}}
+                                    </option>
+                                    {{/unless}}
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="col">
+                            <input class="form-control" name="search_query" id="search_query" placeholder="Buscar..." {{#if search_query}} value="{{search_query}}"{{/if}} oninput="getSuggestionsDebounced('{{api}}', 'search_query', 'search_field','sugerencias');" autocomplete="off" list="sugerencias" >
+                            <datalist id="sugerencias"></datalist>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alta de cliente -->
+                <div class="col-auto order-1 order-lg-2 py-2">
+                    <button class="btn btn-primary" type="button" onclick="window.location.href='{{target}}/add'">{{button}}</button>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-auto align-self-end">
+                    <label for="view" class="form-label">Vista por página </label>
+                </div>
+                <div class="col-auto">
+                    <select class="form-select" name= "view" id="view" onchange="this.form.submit()">
+                        <option value="5" {{#compare 5 '==' view}} selected {{/compare}}>5</option>
+                        <option value="10"  {{#compare 10 '==' view}} selected {{/compare}} >10</option>
+                        <option value="15"  {{#compare 15 '==' view}} selected {{/compare}} >15</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row container my-5">
+                <!-- Ejemplo de tabla -->
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    {{#if factura}}
+                                    <th class="text-center">PDF</th>
+                                    {{/if}}
+                                    {{#each columns}} 
+                                        {{#unless (eq this 'id')}}
+
+                                        <th  
+                                        {{#if (eq this 'nombre')}}style="min-width: 150px;"{{/if}}
+                                        {{#if (eq this 'buque_nombre')}}style="min-width: 150px;"{{/if}}
+                                        {{#if (eq this 'armador_nombre')}}style="min-width: 200px;"{{/if}}
+                                        {{#if (eq this 'cargador_nombre')}}style="min-width: 150px;"{{/if}}
+                                        {{#if (eq this 'fecha')}}style="min-width: 100px;"{{/if}}
+                                        {{#if (eq this 'direccion')}}style="min-width: 300px;"{{/if}}
+                                        {{#if (eq this 'observaciones')}}style="min-width: 300px;"{{/if}}
+                                        >
+                                        {{replace (uppercase this) "_" " "}}
+                                        </th>
+
+                                        {{/unless}}
+                                    {{/each}}
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider" id="table-data-content">
+                                {{#unless (equalsLength data 0)}}
+                                    {{#each data}}
+                                    <tr style="cursor: pointer;" onclick="window.location.href='{{../target}}/get/{{this.id}}'">
+                                        {{#if ../factura}}
+                                        <td>
+                                            <a href="{{../target}}/pdf/{{this.id}}" target="_blank" class="btn btn-outline-danger"  onclick="event.stopPropagation();">
+                                                <i class="bi bi-filetype-pdf"></i>
+                                            </a>
+                                        </td>
+                                        {{/if}}
+                                        {{#each this}}
+                                            {{#unless (eq this ../this.id)}}
+                                            <td>{{#if (isObject this)}}-{{else}}{{this}}{{/if}}</td>
+                                            {{/unless}}
+                                        {{/each}}
+                                    </tr>
+                                    {{/each}}
+                                {{else}}
+                                <tr>
+                                    <td colspan=
+                                        {{#if factura}}
+                                        "{{add 1 (length columns)}}"
+                                        {{else}}
+                                        "{{length columns}}"
+                                        {{/if}}
+                                    >No se han encontrado resultados, intenta buscar de nuevo. </td>
+                                </tr>                                
+                                {{/unless}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>        
+        
+            <div class="row justify-content-center my-5">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center" id="pagination-options">
+                    </ul>
+                </nav>
+            </div>
+        </form>
+    </div>
+</main>
+
+<script src="/js/functions.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    createPaginationNav('pagination-options', {{page}}, {{total}});
+});
+</script>

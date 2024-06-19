@@ -1,0 +1,463 @@
+<main class="container px-5">
+    <h1 class="my-5 py-1">Estadísticas de Clientes</h1>
+    <div class="container-fluid">
+        <div class="accordion mb-5" id="accordionPanelsStayOpenExample">
+            <!-- Accordion item #1 -->
+            <div class="accordion-item" id="accordionItem1">
+                <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                    <h5>Globales por Tipo de Cliente</h5>
+                </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <div class="container">
+                            <div id="message-1"></div>
+                            <form id="form-1" class="my-3" onsubmit="statsClientByType(event, 'stats-1', 'message-1', 'form-1', '{{apiClienteTipo}}', '{{printUrl}}')">
+                                <!-- Form fields here -->
+                                <div class="row justify-content-start">
+                                    <div class="col-lg-3 my-2">
+                                        <label for="chart_type" class="form-label">Tipo de Gráfico</label>
+                                        <select class="form-select" name="chart_type" id="chart_type">
+                                            <option value="pie" selected>Circular</option>
+                                            <option value="doughnut">Rueda</option>
+                                            <option value="polarArea">Área</option>
+                                        </select>                                    
+                                    </div>
+                                </div>
+                                <!-- Form submit button -->
+                                <div class="row justify-content-end">
+                                    <div class ="col-auto my-3">
+                                        <input type="submit" class="btn btn-primary" value="Generar">
+                                    </div>
+                                </div>              
+                            </form>
+                            <div id="stats-1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Accordion Item #2 -->
+            <div class="accordion-item" id="accordionItem2">
+                <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                    <h5>Globales por Procedencia de Cliente</h5>
+                </button>
+                </h2>
+                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <div class="container">
+                            <div id="message-2"></div>
+                            <form id="form-2" class="my-3" onsubmit="statsClientByOrigin(event, 'stats-2', 'message-2', 'form-2', '{{apiClienteOrigen}}', '{{printUrl}}')">
+                                <!-- Form fields here -->
+                                <div class="row">
+                                    <div class="col-lg-3 my-2">
+                                        <label for="chart_type2" class="form-label">Tipo de Gráfico</label>
+                                        <select class="form-select" name="chart_type" id="chart_type2">
+                                            <option value="pie" selected>Circular</option>
+                                            <option value="doughnut">Rueda</option>
+                                            <option value="polarArea">Área</option>
+                                            <option value="bar">Barras</option>
+                                            <option value="line">Línea</option>
+                                        </select>                                    
+                                    </div>
+                                    <div class="col-lg-3  my-2">
+                                        <label for="min_date_filter2" class="form-label">Desde</label>
+                                        <input type="date" class="form-control" name="min_date_filter" id="min_date_filter2">
+                                    </div>
+                                    <div class="col-lg-3  my-2">
+                                        <label for="max_date_filter2" class="form-label">Hasta</label>
+                                        <input type="date" class="form-control" name="max_date_filter" id="max_date_filter2">
+                                    </div>
+                                    <div class="col-lg-3  my-2">
+                                        <label for="puerto_filter2" class="form-label">Puerto</label>
+                                        <input type="text" class="form-control" name="puerto_filter" id="puerto_filter2" oninput="getSuggestionsByFieldDebounced('{{apiSugerenciasEscala}}', 'puerto_filter2', 'puerto', 'puerto_list2');" list="puerto_list2" autocomplete="off">    
+                                        <datalist id="puerto_list2"></datalist>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-end">
+                                    <div class ="col-auto my-3">
+                                        <input type="submit" class="btn btn-primary" value="Generar">
+                                    </div>
+                                </div>              
+                            </form>
+                            <div id="stats-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Accordion Item #3 -->
+            <div class="accordion-item" id="accordionItem3">
+                <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                    <h5>Carga en Función de Fecha</h5>
+                </button>
+                </h2>
+                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <div class="container">
+                            <div id="message-3"></div>
+                            <form id="form-3" class="my-3" onsubmit="statsClientScalesByDate(event, 'stats-3', 'message-3', 'form-3', '{{apiClienteCargaFecha}}', '{{printUrl}}')">
+                                <!-- Form fields here -->
+                                <div class="row">
+                                    <div class="col-lg-3 my-2">
+                                        <label for="chart_type3" class="form-label">Tipo de Gráfico</label>
+                                        <select class="form-select" name="chart_type" id="chart_type3">
+                                            <option value="line" selected>Línea</option>
+                                            <option value="bar">Barras</option>
+                                        </select>                                    
+                                    </div>
+                                    <div class="col-lg-3 my-2">
+                                        <label for="date_group_filter3" class="form-label">Vista (Fecha)</label>
+                                        <select class="form-select" name="date_group_filter" id="date_group_filter3">
+                                            <option value="DAY" selected>Diaria</option>
+                                            <option value="WEEK">Semanal</option>
+                                            <option value="MONTH">Mensual</option>
+                                            <option value="YEAR">Anual</option>
+                                        </select>                                    
+                                    </div>
+                                    <div class="col-lg-3  my-2">
+                                        <label for="min_date_filter3" class="form-label">Desde</label>
+                                        <input type="date" class="form-control" name="min_date_filter" id="min_date_filter3">
+                                    </div>
+                                    <div class="col-lg-3  my-2">
+                                        <label for="max_date_filter3" class="form-label">Hasta</label>
+                                        <input type="date" class="form-control" name="max_date_filter" id="max_date_filter3">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3  my-2">
+                                        <label for="puerto_filter3" class="form-label">Puerto</label>
+                                        <input type="text" class="form-control" name="puerto_filter" id="puerto_filter3" oninput="getSuggestionsByFieldDebounced('{{apiSugerenciasEscala}}', 'puerto_filter3', 'puerto', 'puerto_list3');" list="puerto_list3" autocomplete="off">    
+                                        <datalist id="puerto_list3"></datalist>
+                                    </div>
+                                    <div class="col-lg-3  my-2">
+                                        <label for="material_filter3" class="form-label">Material</label>
+                                        <input type="text" class="form-control" name="material_filter" id="material_filter3" oninput="getSuggestionsByFieldDebounced('{{apiSugerenciasEscala}}', 'material_filter3', 'material', 'material_list3');" list="material_list3" autocomplete="off">    
+                                        <datalist id="material_list3"></datalist>
+                                    </div>
+                                    <div class="col-lg-6  my-2">
+                                        <label for="cliente_filter3" class="form-label">Cliente</label>
+                                        <input type="text" class="form-control" name="cliente_filter" id="cliente_filter3" oninput="getSuggestionsByFieldDebounced('{{apiSugerenciasCliente}}', 'cliente_filter3', 'nombre', 'cliente_list3');" list="cliente_list3" autocomplete="off">    
+                                        <datalist id="cliente_list3"></datalist>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-end">
+                                    <div class ="col-auto my-3">
+                                        <input type="submit" class="btn btn-primary" value="Generar">
+                                    </div>
+                                </div>              
+                            </form>
+                            <div id="stats-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Accordion Item #4 -->
+            <div class="accordion-item" id="accordionItem4">
+                <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
+                    <h5>Carga en Función de Cliente</h5>
+                </button>
+                </h2>
+                <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <div class="container">
+                            <div id="message-4"></div>
+                            <form id="form-4" class="my-3" onsubmit="statsScalesByClients(event, 'stats-4', 'message-4', 'form-4', '{{apiClienteEscalas}}', '{{printUrl}}')">
+                                <!-- Form fields here -->
+                                <div class="row">
+                                    <div class="col-lg-4 my-2">
+                                        <label for="chart_type4" class="form-label">Tipo de Gráfico</label>
+                                        <select class="form-select" name="chart_type" id="chart_type4">
+                                            <option value="line" selected>Línea</option>
+                                            <option value="bar">Barras</option>
+                                        </select>                                    
+                                    </div>
+                                    <div class="col-lg-4  my-2">
+                                        <label for="min_date_filter4" class="form-label">Desde</label>
+                                        <input type="date" class="form-control" name="min_date_filter" id="min_date_filter4">
+                                    </div>
+                                    <div class="col-lg-4  my-2">
+                                        <label for="max_date_filter4" class="form-label">Hasta</label>
+                                        <input type="date" class="form-control" name="max_date_filter" id="max_date_filter4">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4  my-2">
+                                        <label for="puerto_filter4" class="form-label">Puerto</label>
+                                        <input type="text" class="form-control" name="puerto_filter" id="puerto_filter4" oninput="getSuggestionsByFieldDebounced('{{apiSugerenciasEscala}}', 'puerto_filter4', 'puerto', 'puerto_list4');" list="puerto_list4" autocomplete="off">    
+                                        <datalist id="puerto_list4"></datalist>
+                                    </div>
+                                    <div class="col-lg-4  my-2">
+                                        <label for="material_filter4" class="form-label">Material</label>
+                                        <input type="text" class="form-control" name="material_filter" id="material_filter4" oninput="getSuggestionsByFieldDebounced('{{apiSugerenciasEscala}}', 'material_filter4', 'material', 'material_list4');" list="material_list4" autocomplete="off">    
+                                        <datalist id="material_list4"></datalist>
+                                    </div>
+                                    <div class="col-lg-4  my-2">
+                                        <label for="tipo_cliente_filter4" class="form-label">Tipo de cliente</label>
+                                        <input type="text" class="form-control" name="tipo_cliente_filter" id="tipo_cliente_filter4" oninput="getSuggestionsByFieldDebounced('{{apiSugerenciasCliente}}', 'tipo_cliente_filter4', 'tipo', 'tipo_cliente_list4');" list="tipo_cliente_list4" autocomplete="off">    
+                                        <datalist id="tipo_cliente_list4"></datalist>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-end">
+                                    <div class ="col-auto my-3">
+                                        <input type="submit" class="btn btn-primary" value="Generar">
+                                    </div>
+                                </div>              
+                            </form>
+                            <div id="stats-4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Accordion Item #5 -->
+            <div class="accordion-item" id="accordionItem5">
+                <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false" aria-controls="panelsStayOpen-collapseFive">
+                    <h5>Destinos de Clientes</h5>
+                </button>
+                </h2>
+                <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <div class="container">
+                            <div id="message-5"></div>
+                            <form id="form-5" class="my-3" onsubmit="statsClientDestination(event, 'stats-5', 'message-5', 'form-5', '{{apiClienteDestino}}', '{{printUrl}}')">
+                                <!-- Form fields here -->
+                                <div class="row">
+                                    <div class="col-lg-3 my-2">
+                                        <label for="chart_type5" class="form-label">Tipo de Gráfico</label>
+                                        <select class="form-select" name="chart_type" id="chart_type5">
+                                            <option value="line" selected>Línea</option>
+                                            <option value="bar">Barras</option>
+                                        </select>                                    
+                                    </div>
+                                    <div class="col-lg-3  my-2">
+                                        <label for="min_date_filter5" class="form-label">Desde</label>
+                                        <input type="date" class="form-control" name="min_date_filter" id="min_date_filter5">
+                                    </div>
+                                    <div class="col-lg-3  my-2">
+                                        <label for="max_date_filter5" class="form-label">Hasta</label>
+                                        <input type="date" class="form-control" name="max_date_filter" id="max_date_filter5">
+                                    </div>
+                                    <div class="col-lg-3  my-2">
+                                        <label for="material_filter5" class="form-label">Material</label>
+                                        <input type="text" class="form-control" name="material_filter" id="material_filter5" oninput="getSuggestionsByFieldDebounced('{{apiSugerenciasEscala}}', 'material_filter5', 'material', 'material_list5');" list="material_list5" autocomplete="off">    
+                                        <datalist id="material_list5"></datalist>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6  my-2">
+                                        <label for="cliente_filter5" class="form-label">Cliente</label>
+                                        <input type="text" class="form-control" name="cliente_filter" id="cliente_filter5" oninput="getSuggestionsByFieldDebounced('{{apiSugerenciasCliente}}', 'cliente_filter5', 'nombre', 'cliente_list5');" list="cliente_list5" autocomplete="off">    
+                                        <datalist id="cliente_list5"></datalist>
+                                    </div>
+                                    <div class="col-lg-3  my-2">
+                                        <label for="puerto_filter5" class="form-label">Puerto</label>
+                                        <input type="text" class="form-control" name="puerto_filter" id="puerto_filter5" oninput="getSuggestionsByFieldDebounced('{{apiSugerenciasEscala}}', 'puerto_filter5', 'puerto', 'puerto_list5');" list="puerto_list5" autocomplete="off">    
+                                        <datalist id="puerto_list5"></datalist>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-end">
+                                    <div class ="col-auto my-3">
+                                        <input type="submit" class="btn btn-primary" value="Generar">
+                                    </div>
+                                </div>              
+                            </form>
+                            <div id="stats-5"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Accordion Item #6 -->
+            <div class="accordion-item" id="accordionItem6">
+                <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseSix" aria-expanded="false" aria-controls="panelsStayOpen-collapseSix">
+                    <h5>Tiempos de Escala por Cliente</h5>
+                </button>
+                </h2>
+                <div id="panelsStayOpen-collapseSix" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <div class="container">
+                            <div id="message-6"></div>
+                            <form id="form-6" class="my-3" onsubmit="statsClientTimes(event, 'stats-6', 'message-6', 'form-6', '{{apiClienteTiempo}}', '{{printUrl}}')">
+                                <!-- Form fields here -->
+                                <div class="row">
+                                    <div class="col-lg-3 my-2">
+                                        <label for="chart_type6" class="form-label">Tipo de Gráfico</label>
+                                        <select class="form-select" name="chart_type" id="chart_type6">
+                                            <option value="line" selected>Línea</option>
+                                            <option value="bar">Barras</option>
+                                        </select>                                    
+                                    </div>
+                                    <div class="col-lg-3  my-2">
+                                        <label for="min_date_filter6" class="form-label">Desde</label>
+                                        <input type="date" class="form-control" name="min_date_filter" id="min_date_filter6">
+                                    </div>
+                                    <div class="col-lg-3  my-2">
+                                        <label for="max_date_filter6" class="form-label">Hasta</label>
+                                        <input type="date" class="form-control" name="max_date_filter" id="max_date_filter6">
+                                    </div>
+                                    <div class="col-lg-3  my-2">
+                                        <label for="material_filter6" class="form-label">Material</label>
+                                        <input type="text" class="form-control" name="material_filter" id="material_filter6" oninput="getSuggestionsByFieldDebounced('{{apiSugerenciasEscala}}', 'material_filter6', 'material', 'material_list6');" list="material_list6" autocomplete="off">    
+                                        <datalist id="material_list6"></datalist>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3  my-2">
+                                        <label for="puerto_filter6" class="form-label">Puerto</label>
+                                        <input type="text" class="form-control" name="puerto_filter" id="puerto_filter6" oninput="getSuggestionsByFieldDebounced('{{apiSugerenciasEscala}}', 'puerto_filter6', 'puerto', 'puerto_list6');" list="puerto_list6" autocomplete="off">    
+                                        <datalist id="puerto_list6"></datalist>
+                                    </div>                                    
+                                    <div class="col-lg-3  my-2">
+                                        <label for="tipo_cliente_filter6" class="form-label">Tipo de Cliente</label>
+                                        <input type="text" class="form-control" name="tipo_cliente_filter" id="tipo_cliente_filter6" oninput="getSuggestionsByFieldDebounced('{{apiSugerenciasCliente}}', 'tipo_cliente_filter6', 'tipo', 'tipo_cliente_list6');" list="tipo_cliente_list6" autocomplete="off">    
+                                        <datalist id="tipo_cliente_list6"></datalist>
+                                    </div>
+                                    <div class="col-lg-6  my-2">
+                                        <label for="cliente_filter6" class="form-label">Cliente</label>
+                                        <input type="text" class="form-control" name="cliente_filter" id="cliente_filter6" oninput="getSuggestionsByFieldDebounced('{{apiSugerenciasCliente}}', 'cliente_filter6', 'nombre', 'cliente_list6');" list="cliente_list6" autocomplete="off">    
+                                        <datalist id="cliente_list6"></datalist>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-end">
+                                    <div class ="col-auto my-3">
+                                        <input type="submit" class="btn btn-primary" value="Generar">
+                                    </div>
+                                </div>              
+                            </form>
+                            <div id="stats-6"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Accordion Item #7 -->
+            <div class="accordion-item" id="accordionItem7">
+                <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseSeven" aria-expanded="false" aria-controls="panelsStayOpen-collapseSeven">
+                    <h5>Facturación en Función de Fecha</h5>
+                </button>
+                </h2>
+                <div id="panelsStayOpen-collapseSeven" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <div class="container">
+                            <div id="message-7"></div>
+                            <form id="form-7" class="my-3" onsubmit="statsClientInvoiceByDate(event, 'stats-7', 'message-7', 'form-7', '{{apiClienteFacturacionFecha}}', '{{printUrl}}')">
+                                <!-- Form fields here -->
+                                <div class="row">
+                                    <div class="col-lg-3 my-2">
+                                        <label for="chart_type7" class="form-label">Tipo de Gráfico</label>
+                                        <select class="form-select" name="chart_type" id="chart_type7">
+                                            <option value="line" selected>Línea</option>
+                                            <option value="bar">Barras</option>
+                                        </select>                                    
+                                    </div>
+                                    <div class="col-lg-3 my-2">
+                                        <label for="date_group_filter7" class="form-label">Vista (Fecha)</label>
+                                        <select class="form-select" name="date_group_filter" id="date_group_filter7">
+                                            <option value="DAY" selected>Diaria</option>
+                                            <option value="WEEK">Semanal</option>
+                                            <option value="MONTH">Mensual</option>
+                                            <option value="YEAR">Anual</option>
+                                        </select>                                    
+                                    </div>
+                                    <div class="col-lg-3  my-2">
+                                        <label for="min_date_filter7" class="form-label">Desde</label>
+                                        <input type="date" class="form-control" name="min_date_filter" id="min_date_filter7">
+                                    </div>
+                                    <div class="col-lg-3  my-2">
+                                        <label for="max_date_filter7" class="form-label">Hasta</label>
+                                        <input type="date" class="form-control" name="max_date_filter" id="max_date_filter7">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6  my-2">
+                                        <label for="cliente_filter7" class="form-label">Cliente</label>
+                                        <input type="text" class="form-control" name="cliente_filter" id="cliente_filter7" oninput="getSuggestionsByFieldDebounced('{{apiSugerenciasFactura}}', 'cliente_filter7', 'cliente_nombre', 'cliente_list7');" list="cliente_list7" autocomplete="off">    
+                                        <datalist id="cliente_list7"></datalist>
+                                    </div>
+                                    <div class="col-lg-3  my-2">
+                                        <label for="tipo_factura_filter7" class="form-label">Tipo de Factura</label>
+                                        <input type="text" class="form-control" name="tipo_factura_filter" id="tipo_factura_filter7" oninput="getSuggestionsByFieldDebounced('{{apiSugerenciasFactura}}', 'tipo_factura_filter7', 'tipo', 'tipo_factura_list7');" list="tipo_factura_list7" autocomplete="off">    
+                                        <datalist id="tipo_factura_list7"></datalist>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-end">
+                                    <div class ="col-auto my-3">
+                                        <input type="submit" class="btn btn-primary" value="Generar">
+                                    </div>
+                                </div>              
+                            </form>
+                            <div id="stats-7"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Accordion Item #8 -->
+            <div class="accordion-item" id="accordionItem8">
+                <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseEight" aria-expanded="false" aria-controls="panelsStayOpen-collapseEight">
+                    <h5>Facturación en Función de Cliente</h5>
+                </button>
+                </h2>
+                <div id="panelsStayOpen-collapseEight" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <div class="container">
+                            <div id="message-8"></div>
+                            <form id="form-8" class="my-3" onsubmit="statsClientInvoiceGlobal(event, 'stats-8', 'message-8', 'form-8', '{{apiClienteFacturacion}}', '{{printUrl}}')">
+                                <!-- Form fields here -->
+                                <div class="row">
+                                    <div class="col-lg-3 my-2">
+                                        <label for="chart_type8" class="form-label">Tipo de Gráfico</label>
+                                        <select class="form-select" name="chart_type" id="chart_type8">
+                                            <option value="line" selected>Línea</option>
+                                            <option value="bar">Barras</option>
+                                        </select>                                    
+                                    </div>
+                                    <div class="col-lg-3  my-2">
+                                        <label for="min_date_filter8" class="form-label">Desde</label>
+                                        <input type="date" class="form-control" name="min_date_filter" id="min_date_filter8">
+                                    </div>
+                                    <div class="col-lg-3  my-2">
+                                        <label for="max_date_filter8" class="form-label">Hasta</label>
+                                        <input type="date" class="form-control" name="max_date_filter" id="max_date_filter8">
+                                    </div>
+                                    <div class="col-lg-3  my-2">
+                                        <label for="tipo_factura_filter8" class="form-label">Tipo de Factura</label>
+                                        <input type="text" class="form-control" name="tipo_factura_filter" id="tipo_factura_filter8" oninput="getSuggestionsByFieldDebounced('{{apiSugerenciasFactura}}', 'tipo_factura_filter8', 'tipo', 'tipo_factura_list8');" list="tipo_factura_list8" autocomplete="off">    
+                                        <datalist id="tipo_factura_list8"></datalist>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6  my-2">
+                                        <label for="cliente_filter8" class="form-label">Cliente</label>
+                                        <input type="text" class="form-control" name="cliente_filter" id="cliente_filter8" oninput="getSuggestionsByFieldDebounced('{{apiSugerenciasFactura}}', 'cliente_filter8', 'cliente_nombre', 'cliente_list8');" list="cliente_list8" autocomplete="off">    
+                                        <datalist id="cliente_list8"></datalist>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-end">
+                                    <div class ="col-auto my-3">
+                                        <input type="submit" class="btn btn-primary" value="Generar">
+                                    </div>
+                                </div>              
+                            </form>
+                            <div id="stats-8"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Liberías externas (Chart.js, Chartjs-Plugin-Zoom, Chartjs-Adapter-Date)-->
+{{!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> --}}
+<script src="/lib/chartjs@4.4.3/dist/chart.umd.js"></script>
+{{!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/1.1.1/chartjs-plugin-zoom.min.js"></script> --}}
+<!-- <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script> -->
+
+<!-- Funcionalidad propia -->
+<script src="/js/stats.js"></script>
+<script src="/js/functions.js"></script>
+
+</main>

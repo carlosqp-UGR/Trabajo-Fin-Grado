@@ -1,0 +1,90 @@
+<main class="container">
+    <h1 class="my-5 py-1">Datos de Buque</h1>
+    {{#if create}}
+    <form action="{{target}}/add" method="POST">
+    {{else}}
+    <form {{#if edit}} action="{{target}}/edit/{{data.id}}" method="POST" {{/if}}>
+    {{/if}}
+
+        <div class="row justify-content-between mt-4 mb-3 py-2">
+            <div class="col-lg-6">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" name="nombre" id="nombre" value="{{data.nombre}}" {{#not (or edit create)}} readonly {{/not}} required>
+                </div>
+            <div class="col-lg-6">
+                <label for="matricula" class="form-label">Matrícula</label>
+                <input type="text" class="form-control" name="matricula" id="matricula" value="{{data.matricula}}" {{#not (or edit create)}} readonly {{/not}} required>
+            </div>
+        </div>
+
+        <div class="row justify-content-between my-3 py-2">
+            <div class="col-lg-6">
+                <label for="bandera" class="form-label">Bandera</label>
+                <input type="text" class="form-control" name="bandera" id="bandera" oninput="getSuggestionsByFieldDebounced('{{api}}', 'bandera', 'bandera', 'bandera_list');" list="bandera_list" value="{{data.bandera}}" {{#not (or edit create)}} readonly {{/not}}>
+                <datalist id="bandera_list"></datalist>   
+            </div>
+            <div class="col-lg-3">
+                <label for="trn" class="form-label">TRN</label>
+                <input type="number" min="0.0" step="0.01" class="form-control" name="trn" id="trn" value="{{data.trn}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+            <div class="col-lg-3">
+                <label for="trb" class="form-label">TRB</label>
+                <input type="number" min="0.0" step="0.01" class="form-control" name="trb" id="trb" value="{{data.trb}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+        </div>
+
+        <div class="row justify-content-between my-3 py-2">
+            <div class="col-lg-4">
+            <label for="eslora" class="form-label">Eslora</label>
+            <input type="number" min="0.0" step="0.01" class="form-control" name="eslora" id="eslora" value="{{data.eslora}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+            <div class="col-lg-4">
+            <label for="calado" class="form-label">Calado</label>
+            <input type="number" min="0.0" step="0.01" class="form-control" name="calado" id="calado" value="{{data.calado}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+            <div class="col-lg-4">
+            <label for="manga" class="form-label">Manga</label>
+            <input type="number" min="0.0" step="0.01" class="form-control" name="manga" id="manga" value="{{data.manga}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+        </div>
+        <div class="row justify-content-between my-3 py-2">
+            <div class="col">
+                <label for="observaciones" class="form-label">Observaciones</label>
+                <textarea class="form-control" name="observaciones" id="observaciones" rows="3" {{#not (or edit create)}} readonly {{/not}}>{{data.observaciones}}</textarea>
+            </div>
+        </div>
+        
+        <!-- Botones -->
+        <div class="row justify-content-end my-5">
+            {{#if create}}
+            <div class="col-auto">
+                <input type="button" class="btn btn-secondary" value="Cancelar" onclick="window.location.href='{{target}}'">
+            </div>
+            <div class="col-auto">
+                <input type="submit" class="btn btn-primary" value="Guardar">
+            </div>
+            {{else}}
+            {{#unless edit}}
+            <div class="col-auto">
+                <input type="button" class="btn btn-secondary" value="Volver" onclick="window.location.href='{{target}}'">
+            </div>
+            <div class="col-auto">
+                <input type="button" class="btn btn-primary" value="Editar" onclick="window.location.href='{{target}}/edit/{{data.id}}'">
+            </div>
+            {{else}}
+            <div class="col-auto"> <!-- Ajustar a la derecha --> 
+                <input type="button" class="btn btn-danger" value="Eliminar" onclick="confirmDeletion('{{target}}/delete/{{data.id}}')">
+            </div>
+            <div class="col-auto">
+                <input type="button" class="btn btn-secondary" value="Cancelar" onclick="window.location.href='{{target}}/get/{{data.id}}'">
+            </div>
+            <div class="col-auto">
+                <input type="submit" class="btn btn-primary" value="Guardar">
+            </div>
+            {{/unless}}
+            {{/if}}
+        </div>
+    </form>
+</main>
+
+<script src="/js/functions.js"></script>

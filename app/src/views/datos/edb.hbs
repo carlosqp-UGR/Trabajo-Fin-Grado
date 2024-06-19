@@ -1,0 +1,207 @@
+<main class="container">
+    <h1 class="my-5 py-1">Datos de Escala de Buque</h1>
+
+    {{#if create}}
+    <form action="{{target}}/add" method="POST">
+    {{else}}
+    <form {{#if edit}} action="{{target}}/edit/{{data.id}}" method="POST" {{/if}}>
+    {{/if}}
+
+        <div class="row justify-content-between mt-4 mb-3 py-2">
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label for="numero" class="form-label">Número</label>
+                        <input type="text" class="form-control" name="numero" id="numero"
+                        value="{{#if create}}{{sugerencia_numero}}{{else}}{{data.numero}}{{/if}}"
+                        {{#not (or edit create)}} readonly disabled {{/not}} required>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="puerto" class="form-label">Puerto</label>
+                        <select class="form-select" name="puerto" id="puerto" {{#not (or edit create)}} disabled {{/not}}>
+                        {{#each puertos}}
+                            <option value="{{this}}" {{#eq ../data.puerto this}} selected {{/eq}}>{{capitalize this}}</option>
+                        {{/each}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <label for="buque_nombre" class="form-label">
+                    Buque
+                    {{#not (or edit create)}}
+                    <a href="{{ruta_buques}}/get/{{data.buque_id}}" onclick="window.open(this.href); return false;" class="text-dark">
+                    <i class="bi bi-link-45deg"></i>
+                    </a>
+                    {{/not}}
+                </label>
+                <input type="text" class="form-control" name="buque_nombre" id="buque_nombre" oninput="getSuggestionsByFieldDebounced('{{api_buques}}', 'buque_nombre', 'nombre', 'buque_list');" list="buque_list" value="{{data.buque_nombre}}" {{#not (or edit create)}} readonly {{/not}} required>    
+                <datalist id="buque_list"></datalist>
+            </div>
+        </div>
+
+        <div class="row justify-content-between my-3 py-2">
+            <div class="col-lg-6">
+                <label for="entrada" class="form-label">Entrada</label>
+                <input type="date" class="form-control" name="entrada" id="entrada" value="{{data.entrada}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+            <div class="col-lg-6">
+                <label for="salida" class="form-label">Salida</label>
+                <input type="date" class="form-control" name="salida" id="salida" value="{{data.salida}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+        </div>
+
+        <div class="row justify-content-between my-3 py-2">
+            <div class="col-lg-6">
+                <label for="t2l" class="form-label">T2L</label>
+                <input type="text" class="form-control" name="t2l" id="t2l" value="{{data.t2l}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+            <div class="col-lg-6">
+                <label for="dua" class="form-label">DUA</label>
+                <input type="text" class="form-control" name="dua" id="dua" value="{{data.dua}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+        </div>
+
+        <div class="row justify-content-between my-3 py-2">
+            <!-- API Para obtener los origenes, destinos... -->
+            <div class="col-lg-6">
+                <label for="origen" class="form-label">Origen</label>
+                <input type="text" class="form-control" name="origen" id="origen" oninput="getSuggestionsByFieldDebounced('{{api_edb}}', 'origen', 'origen', 'origen_list');" list="origen_list" value="{{data.origen}}" {{#not (or edit create)}} readonly {{/not}}>    
+                <datalist id="origen_list"></datalist>
+            </div>
+            <div class="col-lg-6">
+                <label for="destino" class="form-label">Destino</label>
+                <input type="text" class="form-control" name="destino" id="destino" oninput="getSuggestionsByFieldDebounced('{{api_edb}}', 'destino', 'destino', 'destino_list');" list="destino_list" value="{{data.destino}}" {{#not (or edit create)}} readonly {{/not}}>    
+                <datalist id="destino_list"></datalist>            
+            </div>
+        </div>
+
+        <div class="row justify-content-between my-3 py-2">
+            <div class="col-lg-6">
+                <label for="armador_nombre" class="form-label">
+                    Armador
+                    {{#not (or edit create)}}
+                    <a href="{{ruta_clientes}}/get/{{data.armador_id}}" onclick="window.open(this.href); return false;" class="text-dark">
+                    <i class="bi bi-link-45deg"></i>
+                    </a>
+                    {{/not}}
+                </label>
+                <input type="text" class="form-control" name="armador_nombre" id="armador_nombre" oninput="getSuggestionsByFieldDebounced('{{api_clientes}}', 'armador_nombre', 'nombre', 'armador_list');" list="armador_list" value="{{data.armador_nombre}}" {{#not (or edit create)}} readonly {{/not}} required>    
+                <datalist id="armador_list"></datalist>
+            </div>
+            <div class="col-lg-6">
+                <label for="capitan" class="form-label">Capitan</label>
+                <input type="text" class="form-control" name="capitan" id="capitan" value="{{data.capitan}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+        </div>
+
+        <div class="row justify-content-between my-3 py-2">
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label for="material" class="form-label">Material</label>
+                        <select class="form-select" name="material" id="material" {{#not (or edit create)}} disabled {{/not}}>
+                        {{#each materiales}}
+                            <option value="{{this}}" {{#eq ../data.material this}} selected {{/eq}}>{{capitalize this}}</option>
+                        {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="carga" class="form-label">Carga (Toneladas)</label>
+                        <input type="number" step="0.01" min="0" class="form-control" name="carga" value="{{data.carga}}" {{#not (or edit create)}} readonly {{/not}}>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <label for="cargador_nombre" class="form-label">
+                    Cargador
+                    {{#not (or edit create)}}
+                    <a href="{{ruta_clientes}}/get/{{data.cargador_id}}" onclick="window.open(this.href); return false;" class="text-dark">
+                    <i class="bi bi-link-45deg"></i>
+                    </a>
+                    {{/not}}
+                </label>
+                <input type="text" class="form-control" name="cargador_nombre" id="cargador_nombre" oninput="getSuggestionsByFieldDebounced('{{api_clientes}}', 'cargador_nombre', 'nombre', 'cargador_list');" list="cargador_list" value="{{data.cargador_nombre}}" {{#not (or edit create)}} readonly {{/not}} required>    
+                <datalist id="cargador_list"></datalist>
+            </div>
+        </div>
+
+        <div class="row justify-content-between my-3 py-2">
+            <div class="col-lg-4">
+                <label for="arrival_on_the_road" class="form-label">1. Arrival On The Road</label>
+                <input type="datetime-local" class="form-control" name="arrival_on_the_road" id="arrival_on_the_road" value="{{data.arrival_on_the_road}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+            <div class="col-lg-4">
+                <label for="entrada_fondeadero" class="form-label">2. Entrada Fondeadero</label>
+                <input type="datetime-local" class="form-control" name="entrada_fondeadero" id="entrada_fondeadero" value="{{data.entrada_fondeadero}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+            <div class="col-lg-4">
+                <label for="salida_fondeadero" class="form-label">3. Salida Fondeadero</label>
+                <input type="datetime-local" class="form-control" name="salida_fondeadero" id="salida_fondeadero" value="{{data.salida_fondeadero}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+        </div>
+
+        <div class="row justify-content-between my-3 py-2">
+            <div class="col-lg-4">
+                <label for="atraque_puerto" class="form-label">4. Atraque en puerto</label>
+                <input type="datetime-local" class="form-control" name="atraque_puerto" id="atraque_puerto" value="{{data.atraque_puerto}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+            <div class="col-lg-4">
+                <label for="inicio_carga" class="form-label">5. Inicio de carga</label>
+                <input type="datetime-local" class="form-control" name="inicio_carga" id="inicio_carga" value="{{data.inicio_carga}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+            <div class="col-lg-4">
+                <label for="fin_carga" class="form-label">6. Fin de carga</label>
+                <input type="datetime-local" class="form-control" name="fin_carga" id="fin_carga" value="{{data.fin_carga}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+        </div>
+
+        <div class="row justify-content-between my-3 py-2">
+            <div class="col-lg-4">
+                <label for="salida_puerto" class="form-label">7. Salida de puerto</label>
+                <input type="datetime-local" class="form-control" name="salida_puerto" id="salida_puerto" value="{{data.salida_puerto}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+        </div>
+
+        <div class="row justify-content-between my-3 py-2">
+            <div class="col">
+            <label for="observaciones" class="form-label">Observaciones</label>
+            <textarea class="form-control" name="observaciones" id="observaciones" rows="3" {{#not (or edit create)}} readonly {{/not}}>{{data.observaciones}}</textarea>
+            </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="row justify-content-end my-5">
+            {{#if create}}
+            <div class="col-auto">
+                <input type="button" class="btn btn-secondary" value="Cancelar" onclick="window.location.href='{{target}}'">
+            </div>
+            <div class="col-auto">
+                <input type="submit" class="btn btn-primary" value="Guardar">
+            </div>
+            {{else}}
+            {{#unless edit}}
+            <div class="col-auto">
+                <input type="button" class="btn btn-secondary" value="Volver" onclick="window.location.href='{{target}}'">
+            </div>
+            <div class="col-auto">
+                <input type="button" class="btn btn-primary" value="Editar" onclick="window.location.href='{{target}}/edit/{{data.id}}'">
+            </div>
+            {{else}}
+            <div class="col-auto"> <!-- Ajustar a la derecha --> 
+                <input type="button" class="btn btn-danger" value="Eliminar" onclick="confirmDeletion('{{target}}/delete/{{data.id}}')">
+            </div>
+            <div class="col-auto">
+                <input type="button" class="btn btn-secondary" value="Cancelar" onclick="window.location.href='{{target}}/get/{{data.id}}'">
+            </div>
+            <div class="col-auto">
+                <input type="submit" class="btn btn-primary" value="Guardar">
+            </div>
+            {{/unless}}
+            {{/if}}
+      </div>
+    </form>
+
+</main>
+
+<script src="/js/functions.js"></script>

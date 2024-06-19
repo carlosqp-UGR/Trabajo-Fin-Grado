@@ -1,0 +1,85 @@
+<main class="container px-5">
+    <div id="message-id" class="mt-5"></div>
+    <h1 class="mt-2 mb-5 py-1">Listado de Facturas</h1>
+    <div class="container-fluid">
+    <form id="form-id" onsubmit="handleInvoiceListFormSubmit(event, 'form-id', 'message-id', '{{apiUrl}}', '{{printUrl}}')">
+        <div class="row pb-3">Seleccione los campos (obligatorio):</div>
+        <div class="row">
+            <div class="col-lg-3 col-sm-6 my-2 form-check">
+                <input class="form-check-input" type="checkbox" name="numero" id="numero">
+                <label class="form-check-label" for="numero">Número</label>
+            </div>
+            <div class="col-lg-3 col-sm-6 my-2 form-check">
+                <input class="form-check-input" type="checkbox" name="tipo" id="tipo">
+                <label class="form-check-label" for="tipo">Tipo</label>
+            </div>
+            <div class="col-lg-3 col-sm-6 my-2 form-check">
+                <input class="form-check-input" type="checkbox" name="fecha" id="fecha">
+                <label class="form-check-label" for="fecha">Fecha</label>
+            </div>
+            <div class="col-lg-3 col-sm-6 my-2 form-check">
+                <input class="form-check-input" type="checkbox" name="cliente_nombre" id="cliente_nombre">
+                <label class="form-check-label" for="cliente_nombre">Cliente</label>
+            </div>
+            <div class="col-lg-3 col-sm-6 my-2 form-check">
+                <input class="form-check-input" type="checkbox" name="buque_nombre" id="buque_nombre">
+                <label class="form-check-label" for="buque_nombre">Buque</label>
+            </div>
+            <div class="col-lg-3 col-sm-6 my-2 form-check">
+                <input class="form-check-input" type="checkbox" name="iva" id="iva">
+                <label class="form-check-label" for="iva">IVA</label>
+            </div>
+            <div class="col-lg-3 col-sm-6 my-2 form-check">
+                <input class="form-check-input" type="checkbox" name="total_sin_iva" id="total_sin_iva">
+                <label class="form-check-label" for="total_sin_iva">Total sin IVA</label>
+            </div>
+            <div class="col-lg-3 col-sm-6 my-2 form-check">
+                <input class="form-check-input" type="checkbox" name="total_con_iva" id="total_con_iva">
+                <label class="form-check-label" for="total_con_iva">Total con IVA</label>
+            </div>
+        </div>
+
+        <div class="row pt-5 pb-2">Aplicar filtros (opcional):</div>
+        <div class="row">
+            <div class="col-lg-3  my-2">
+                <label for="min_date_filter" class="form-label">Desde</label>
+                <input type="date" class="form-control" name="min_date_filter" id="min_date_filter">
+            </div>
+            <div class="col-lg-3  my-2">
+                <label for="max_date_filter" class="form-label">Hasta</label>
+                <input type="date" class="form-control" name="max_date_filter" id="max_date_filter">
+            </div>
+            <div class="col-lg-3  my-2">
+                <label for="tipo_filter" class="form-label">Tipo</label>
+                <input type="text" class="form-control" name="tipo_filter" id="tipo_filter" oninput="getSuggestionsByFieldDebounced('{{apiSugerencias}}', 'tipo_filter', 'tipo', 'tipo_list');" list="tipo_list" >    
+                <datalist id="tipo_list"></datalist>
+            </div>
+            <div class="col-lg-3  my-2">
+                <label for="numero_filter" class="form-label">Numero</label>
+                <input type="text" class="form-control" name="numero_filter" id="numero_filter" oninput="getSuggestionsByFieldDebounced('{{apiSugerencias}}', 'numero_filter', 'numero', 'numero_list');" list="numero_list" >    
+                <datalist id="numero_list"></datalist>
+            </div>
+            <div class="col-lg-6  my-2">
+                <label for="cliente_filter" class="form-label">Cliente</label>
+                <input type="text" class="form-control" name="cliente_filter" id="cliente_filter" oninput="getSuggestionsByFieldDebounced('{{apiSugerencias}}', 'cliente_filter', 'cliente_nombre', 'cliente_list');" list="cliente_list" >    
+                <datalist id="cliente_list"></datalist>
+            </div>
+            <div class="col-lg-6  my-2">
+                <label for="buque_filter" class="form-label">Buque</label>
+                <input type="text" class="form-control" name="buque_filter" id="buque_filter" oninput="getSuggestionsByFieldDebounced('{{apiSugerencias}}', 'buque_filter', 'buque_nombre', 'buque_list');" list="buque_list" >    
+                <datalist id="buque_list"></datalist>
+            </div>
+        </div>
+
+        <div class="row justify-content-end">
+            <div class ="col-auto mt-5 mb-3">
+                <input type="submit" class="btn btn-primary" value="Generar">
+            </div>
+        </div>                     
+    </form>
+    </div>
+
+<!-- Funcionalidad propia -->
+<script src="/js/functions.js"></script>
+
+</main>

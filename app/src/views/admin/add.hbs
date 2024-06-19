@@ -1,0 +1,43 @@
+<main class="container p-4">
+  <div class="row">
+    <div class="col-md-10 mx-auto">
+      <div class="card card-body text-center" style="max-width: 400px; margin: auto;">
+        <h1 class="h3 mt-3 mb-4 fw-bold">Registrar nuevo usuario</h1>
+        
+        <form action="/admin/usuarios/add" method="POST">
+
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingFullname" name="fullname" placeholder="Nombre completo" required>
+            <label for="floatingFullname">Nombre completo</label>
+          </div>
+
+          <div class="form-floating">
+            <input type="text" name="username" class="form-control" id="floatingInput" placeholder="Usuario" required>
+            <label for="floatingInput">Usuario</label>
+          </div>
+          
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingPassword" name="password" placeholder="Contraseña" required>
+            <label for="floatingPassword">Contraseña</label>
+          </div>
+
+          <div class="form-check text-start my-3">
+              <label class="form-label" >Administrador:  </label>
+              <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="admin" id="admin1" value="si">
+                  <label class="form-check-label" for="admin1">Si</label>
+              </div>
+              <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="admin" id="admin2" value="no" checked>
+                  <label class="form-check-label" for="admin2">No</label>
+              </div>
+          </div>
+
+          <button type="button" class="btn btn-secondary" onclick="window.location.href='/admin/usuarios'">Cancelar</button>
+          <button class="btn btn-primary" type="submit">Guardar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+

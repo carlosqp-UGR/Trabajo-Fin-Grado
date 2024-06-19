@@ -1,0 +1,44 @@
+<main class="container p-4">
+  <form class="mx-auto card p-4 w-100 p-2 shadow-sm" autocomplete="off" action="{{target}}/edit/{{data.id}}" method="POST" style="max-width: 400px; margin: auto;">
+    <h1 class="h3 mb-3 text-center fw-bold">Editar usuario</h1>
+
+    <label for="username" class="text-start ms-0">Usuario</label>
+    <input type="text" name="username" id="username" class="form-control mb-3" value="{{data.username}}" required="" autofocus="">
+
+    <label for="fullname" class="text-start ms-0">Nombre completo</label>
+    <input type="text" name="fullname" id="fullname" class="form-control mb-3" value="{{data.fullname}}" required="" autofocus="">
+
+    {{!--
+    <label for="password" class="text-start">Contraseña</label>
+
+    <div class="input-group">
+      <input type="password" id="password" name="password" autocomplete="password" class="form-control rounded input-password" spellcheck="false" value="{{data.password}}" autocorrect="off" autocapitalize="off" required="">
+      <button id="toggle-password" type="button" class="" aria-label="Show password as plain text. Warning: this will display your password on the screen."></button>
+    </div>
+    --}}
+
+    <div class="form-check text-start my-3">
+      <label class="form-label" >Administrador:  </label>
+      <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="admin" id="admin1" value="si" {{#if data.admin}}checked{{/if}}>
+          <label class="form-check-label" for="admin1">Sí</label>
+      </div>
+      <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="admin" id="admin2" value="no" {{#unless data.admin}}checked{{/unless}}>
+          <label class="form-check-label" for="admin2">No</label>
+      </div>
+    </div>
+
+    <button class="btn btn-primary my-2" type="submit">Guardar</button>
+    <button class="btn btn-outline-success my-2" type="button" onclick="window.location.href='{{target}}/change-password/{{data.id}}'">Cambiar Contraseña</button>
+    <button class="btn btn-secondary my-2" type="button" onclick="window.location.href='{{target}}'">Cancelar</button>  
+  </form>
+</main>
+
+{{!--
+<link rel="stylesheet" href="/styles/show-password-toggle.min.css">
+<script src="/js/show-password-toggle.min.js"></script>
+--}}
+
+
+

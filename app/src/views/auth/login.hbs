@@ -1,0 +1,28 @@
+<main class="container p-4">
+  <form class="mx-auto card p-4 w-100 p-2 shadow-sm" autocomplete="off" action="/login" method="POST" style="max-width: 400px; margin: auto;">
+    <h1 class="h3 mb-3 text-center  fw-bold">Iniciar sesión</h1>
+
+    <label for="username" class="text-start ms-0">Usuario</label>
+    <input type="text" name="username" id="username" class="form-control mb-3" required="" autofocus="">
+
+    <label for="password" class="text-start">Contraseña</label>
+
+    <div class="input-group">
+      <input type="password" id="password" name="password" autocomplete="password" class="form-control rounded input-password" spellcheck="false" autocorrect="off" autocapitalize="off" required="">
+      <button id="toggle-password" type="button" class="" aria-label="Show password as plain text. Warning: this will display your password on the screen."></button>
+    </div>
+    {{!
+    <div class="form-check text-start mt-4">
+      <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
+      <label class="form-check-label" for="flexCheckDefault">Recordarme</label>
+    </div>
+    }}
+    <button class="btn btn-lg btn-primary w-100 mt-4" type="submit">Acceder</button>
+  </form>
+</main>
+
+<link rel="stylesheet" href="/lib/bootstrap-show-password-toggle@1.4.1/css/show-password-toggle.min.css">
+<script src="/lib/bootstrap-show-password-toggle@1.4.1/js/show-password-toggle.min.js"></script>
+
+
+

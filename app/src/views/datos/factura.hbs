@@ -1,0 +1,240 @@
+<main class="container mx-auto my-5">
+    <h1 class="my-4">{{title}}</h1>
+    {{#if create}}
+    <form action="{{target}}/add" method="POST">
+    {{else}}
+    <form {{#if edit}} action="{{target}}/edit/{{data.id}}" method="POST" {{/if}}>
+    {{/if}}
+        <div class="row justify-content-between my-3">
+            <div class="col-lg-6">
+                <div class="col-lg-6 py-2">
+                    <label for="num_factura" class="form-label">Número de Factura</label>
+                    <input type="text" class="form-control" name="num_factura" id="num_factura" 
+                    value="{{#if create}}{{sugerencia_num_factura}}{{else}}{{data.num_factura}}{{/if}}" 
+                    {{#not (or edit create)}} readonly {{/not}} required>
+                </div>
+            </div>
+            <div class="col-lg-6 py-2">
+                <label for="fecha" class="form-label">Fecha</label>
+                <input type="date" class="form-control" name="fecha" id="fecha" value="{{data.fecha}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+        </div>
+
+        <div class="row justify-content-between my-3">
+            <div class="col-lg-12 py-2">
+                <label for="cliente_nombre" class="form-label">
+                    Cliente
+                    {{#not (or edit create)}}
+                    <a href="{{ruta_clientes}}/get/{{data.cliente_id}}" onclick="window.open(this.href); return false;" class="text-dark">
+                    <i class="bi bi-link-45deg"></i>
+                    </a>
+                    {{/not}}
+                </label>
+                <input type="text" class="form-control" name="cliente_nombre" id="cliente_nombre" oninput="getSuggestionsByFieldDebounced('{{api_cliente}}', 'cliente_nombre', 'nombre', 'cliente_list');" list="cliente_list" value="{{data.cliente_nombre}}" {{#not (or edit create)}} readonly {{/not}} required>    
+                <datalist id="cliente_list"></datalist>           
+            </div>
+        </div>
+
+        {{#if (or (eq tipo 'A') (eq tipo 'B'))}}
+        <div class="row justify-content-between my-3">
+            <div class="col-lg-6 py-2">
+                <label for="buque_nombre" class="form-label">
+                    Buque
+                    {{#not (or edit create)}}
+                    <a href="{{ruta_buques}}/get/{{data.buque_id}}" onclick="window.open(this.href); return false;" class="text-dark">
+                    <i class="bi bi-link-45deg"></i>
+                    </a>
+                    {{/not}}
+                </label>
+                <input type="text" class="form-control" name="buque_nombre" id="buque_nombre" oninput="getSuggestionsByFieldDebounced('{{api_buque}}', 'buque_nombre', 'nombre', 'buque_list');" list="buque_list" value="{{data.buque_nombre}}" {{#not (or edit create)}} readonly {{/not}} required>    
+                <datalist id="buque_list"></datalist>
+            </div>
+
+            <div class="col-lg-3 py-2">
+                <label for="fecha_entrada" class="form-label">Fecha de entrada</label>
+                <input type="date" class="form-control" name="fecha_entrada" id="fecha_entrada" value="{{data.fecha_entrada}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+
+            <div class="col-lg-3 py-2">
+                <label for="fecha_salida" class="form-label">Fecha de salida</label>
+                <input type="date" class="form-control" name="fecha_salida" id="fecha_salida" value="{{data.fecha_salida}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+        </div>
+        {{/if}}
+
+        <div class="row justify-content-between my-3">
+            <div class="col-lg-4 py-2">
+                <label for="iva" class="form-label">IVA</label>
+                <input type="number" min="0.0" max="100.0" step="0.01" class="form-control" name="iva" id="iva" value="{{#if data.iva}}{{data.iva}}{{else}}0{{/if}}" {{#not (or edit create)}} readonly {{/not}} required>    
+            </div>
+        </div>
+
+        {{#if data.concepto}}
+          <!-- First row (headers only) -->
+          <div class="row justify-content-between mt-5">
+              {{#if (eq tipo 'C')}}
+              <div class="col-2 py-2">
+                <label for="dia" class="form-label">Día</label>
+              </div>
+              {{/if}}
+              <div class="col-{{#if (eq tipo 'C')}}8{{else}}10{{/if}} py-2">
+                <label for="concepto" class="form-label">Concepto</label>
+              </div>
+              <div class="col-2 py-2">
+                <label for="precio" class="form-label">Precio</label>
+              </div>
+          </div>
+
+          {{#eachIndex data.concepto}}
+          <div class="row justify-content-between my-0">
+              {{#if (eq ../tipo 'C')}}
+              <div class="col-2 py-2">
+                  <input type="number" min="1" max="31" class="form-control" name="dia" value="{{itemAt ../data.dia index}}" {{#not (or ../edit ../create)}} readonly {{/not}}>
+              </div>
+              {{/if}}
+              <div class="col-{{#if (eq ../tipo 'C')}}8{{else}}10{{/if}} py-2">
+                  <input type="text"class="form-control" name="concepto" value="{{itemAt ../data.concepto index}}" {{#if (or (eq ../tipo 'A') (eq ../tipo 'B'))}} list="sugerencias_concepto" oninput="conceptSuggestions();" {{/if}} {{#not (or ../edit ../create)}} readonly {{/not}}>
+                  <datalist id="sugerencias_concepto"></datalist>
+              </div>
+              <div class="col-2 py-2">
+                  <input type="number" step="0.01" min="0" class="form-control" name="precio" value="{{itemAt ../data.precio index}}" {{#not (or ../edit ../create)}} readonly {{/not}}>
+              </div>
+          </div> 
+          {{/eachIndex}}
+        {{else}}
+        <div id="concepts-form"></div>
+        {{/if}}
+
+        <!-- Botones -->
+        <div class="row justify-content-end my-5">
+            {{#if create}}
+            <div class="col-auto">
+                <input type="button" class="btn btn-secondary" value="Cancelar" onclick="window.location.href='{{target}}'">
+            </div>
+            <div class="col-auto">
+                <input type="submit" class="btn btn-primary" value="Guardar">
+            </div>
+            {{else}}
+            {{#unless edit}}
+            <div class="col-auto">
+                <input type="button" class="btn btn-secondary" value="Volver" onclick="window.location.href='{{target}}'">
+            </div>
+            <div class="col-auto">
+                <input type="button" class="btn btn-outline-danger" value="Imprimir" onclick="window.open('{{target}}/pdf/{{data.id}}', '_blank');">
+            </div>
+            <div class="col-auto">
+                <input type="button" class="btn btn-primary" value="Editar" onclick="window.location.href='{{target}}/edit/{{data.id}}'">
+            </div>
+            {{else}}
+            <div class="col-auto"> <!-- Ajustar a la derecha --> 
+                <input type="button" class="btn btn-danger" value="Eliminar" onclick="confirmDeletion('{{target}}/delete/{{data.id}}')">
+            </div>
+            <div class="col-auto">
+                <input type="button" class="btn btn-secondary" value="Cancelar" onclick="window.location.href='{{target}}/get/{{data.id}}'">
+            </div>
+            <div class="col-auto">
+                <input type="submit" class="btn btn-primary" value="Guardar">
+            </div>
+            {{/unless}}
+            {{/if}}
+      </div>
+
+    </form>
+</main>
+
+<script src="/js/functions.js"></script>
+
+
+<script>
+
+
+
+{{#if (or (eq tipo 'A') (eq tipo 'B'))}}
+{{#if (eq tipo 'A')}}
+const concepts = [
+    'PILOTAGE',
+    'MOORING AND UNMOORING',
+    'PORT DUES',
+    'DOCTOR FEE',
+    'TAXI SERVICES',
+    'AGENCY FEE',
+    'LIGHT DUES',
+    'PETTIES',
+    'AGENCY CREW ASSISTANCE'
+];
+{{/if}}
+{{#if (eq tipo 'B')}}
+const concepts = [
+    'DOCTOR FEE',
+    'HOTEL ACCOMODATION',
+    'FRESH WATER',
+    'AGENCY FEE'
+];
+{{/if}}
+
+function conceptSuggestions() {
+    let element_id = 'sugerencias_concepto';
+    let data = concepts;
+    const suggestions = document.getElementById(element_id);
+    suggestions.innerHTML = '';
+    data.forEach(entry => {
+            const option = document.createElement('option');
+            option.text = entry.toString();
+            suggestions.appendChild(option);
+    });
+}
+{{/if}}
+
+{{#unless data.concepto}}
+function createConceptsForm(number) {
+    var element = document.getElementById("concepts-form"); // 'pagination-options'
+    element.innerHTML = '';
+
+    // Create first row
+    element.innerHTML = `
+    <div class="row justify-content-between mt-5">
+        {{#if (eq tipo 'C')}}
+        <div class="col-2 py-2">
+            <label for="dia" class="form-label">Día</label>
+            <input type="number" min="1" max="31" class="form-control" name="dia">
+        </div>
+        {{/if}}
+        <div class="col-{{#if (eq tipo 'C')}}8{{else}}10{{/if}} py-2">
+            <label for="concepto" class="form-label">Concepto</label>
+            <input type="text"class="form-control" name="concepto" {{#if (or (eq tipo 'A') (eq tipo 'B'))}} list="sugerencias_concepto" oninput="conceptSuggestions();" {{/if}}>
+            <datalist id="sugerencias_concepto"></datalist>
+        </div>
+        <div class="col-2 py-2">
+            <label for="precio" class="form-label">Precio</label>
+            <input type="number" step="0.01" min="0" class="form-control" name="precio">
+        </div>
+    </div>
+    `;
+
+    for(let i=1;  i<number; i++) {
+      element.innerHTML += `
+      <div class="row justify-content-between my-0">
+          {{#if (eq tipo 'C')}}
+          <div class="col-2 py-2">
+              <input type="number" min="1" max="31" class="form-control" name="dia">
+          </div>
+          {{/if}}
+          <div class="col-{{#if (eq tipo 'C')}}8{{else}}10{{/if}} py-2">
+              <input type="text"class="form-control" name="concepto" {{#if (or (eq tipo 'A') (eq tipo 'B'))}} list="sugerencias_concepto" oninput="conceptSuggestions();" {{/if}}>
+              <datalist id="sugerencias_concepto"></datalist>
+          </div>
+          <div class="col-2 py-2">
+              <input type="number" step="0.01" min="0" class="form-control" name="precio">
+          </div>
+      </div>
+      `;
+
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    createConceptsForm(20);
+});
+{{/unless}}
+
+</script>

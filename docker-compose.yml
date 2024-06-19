@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  ansada-app:
+    image: ansada-app
+    restart: always
+    depends_on:
+      - ansada-mariadb
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_HOST: ansada-mariadb
+      DATABASE_USER: app-user
+      DATABASE_PASSWORD: app-passwd
+      DATABASE_NAME: gestion_ansada
+      DATABASE_PORT: 3306
+      PRODUCTION: true
+
+  ansada-mariadb:
+    image: mariadb:latest
+    hostname: ansada-mariadb
+    restart: always
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root-passwd
+    volumes:
+      - ./database/db-v0.sql:/docker-entrypoint-initdb.d/init.sql

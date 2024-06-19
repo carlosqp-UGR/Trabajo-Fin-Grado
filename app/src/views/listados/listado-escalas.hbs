@@ -1,0 +1,164 @@
+<main class="container px-5">
+    <div id="message-id" class="mt-5"></div>
+    <h1 class="mt-2 mb-5 py-1">Listado de Escalas</h1>
+    <div class="container-fluid">
+    <form id="form-id" onsubmit="handleScaleListFormSubmit(event, 'form-id', 'message-id', '{{apiUrl}}', '{{printUrl}}')">
+        <div class="row pb-3">Seleccione los campos (obligatorio):</div>
+        <!--
+        [
+        'id',                 'numero',
+        't2l',                'dua',
+        'entrada',            'salida',
+        'carga',              'material',
+        'cargador_id',        'buque_id',
+        'capitan',            'armador_id',
+        'origen',             'destino',
+        'puerto',             'arrival_on_the_road',
+        'entrada_fondeadero', 'salida_fondeadero',
+        'atraque_puerto',     'inicio_carga',
+        'fin_carga',          'salida_puerto',
+        'observaciones',      'armador_nombre',
+        'cargador_nombre',    'buque_nombre'
+        ]
+        -->
+        <div class="row">
+            <div class="col-lg-3 col-sm-6 my-2 form-check">
+                <input class="form-check-input" type="checkbox" name="numero" id="numero">
+                <label class="form-check-label" for="numero">Número</label>
+            </div>
+            <div class="col-lg-3 col-sm-6 my-2 form-check">
+                <input class="form-check-input" type="checkbox" name="buque_nombre" id="buque_nombre">
+                <label class="form-check-label" for="buque_nombre">Buque</label>
+            </div>
+            <div class="col-lg-3 col-sm-6 my-2 form-check">
+                <input class="form-check-input" type="checkbox" name="t2l" id="t2l">
+                <label class="form-check-label" for="t2l">T2L</label>
+            </div>
+            <div class="col-lg-3 col-sm-6 my-2 form-check">
+                <input class="form-check-input" type="checkbox" name="dua" id="dua">
+                <label class="form-check-label" for="dua">DUA</label>
+            </div>
+            <div class="col-lg-3 col-sm-6 my-2 form-check">
+                <input class="form-check-input" type="checkbox" name="entrada" id="entrada">
+                <label class="form-check-label" for="entrada">Entrada</label>
+            </div>
+            <div class="col-lg-3 col-sm-6 my-2 form-check">
+                <input class="form-check-input" type="checkbox" name="salida" id="salida">
+                <label class="form-check-label" for="salida">Salida</label>
+            </div>
+            <div class="col-lg-3 col-sm-6 my-2 form-check">
+                <input class="form-check-input" type="checkbox" name="armador_nombre" id="armador_nombre">
+                <label class="form-check-label" for="armador_nombre">Armador</label>
+            </div>
+            <div class="col-lg-3 col-sm-6 my-2 form-check">
+                <input class="form-check-input" type="checkbox" name="cargador_nombre" id="cargador_nombre">
+                <label class="form-check-label" for="cargador_nombre">Cargador</label>
+            </div>  
+            <div class="col-lg-3 col-sm-6 my-2 form-check">
+                <input class="form-check-input" type="checkbox" name="origen" id="origen">
+                <label class="form-check-label" for="origen">Origen</label>
+            </div>
+            <div class="col-lg-3 col-sm-6 my-2 form-check">
+                <input class="form-check-input" type="checkbox" name="destino" id="destino">
+                <label class="form-check-label" for="destino">Destino</label>
+            </div>
+            <div class="col-lg-3 col-sm-6 my-2 form-check">
+                <input class="form-check-input" type="checkbox" name="capitan" id="capitan">
+                <label class="form-check-label" for="capitan">Capitan</label>
+            </div> 
+            <div class="col-lg-3 col-sm-6 my-2 form-check">
+                <input class="form-check-input" type="checkbox" name="puerto" id="puerto">
+                <label class="form-check-label" for="puerto">Puerto</label>
+            </div> 
+            <div class="col-lg-3 col-sm-6 my-2 form-check">
+                <input class="form-check-input" type="checkbox" name="material" id="material">
+                <label class="form-check-label" for="material">Material</label>
+            </div>
+            <div class="col-lg-3 col-sm-6 my-2 form-check">
+                <input class="form-check-input" type="checkbox" name="carga" id="carga">
+                <label class="form-check-label" for="carga">Carga</label>
+            </div>            
+            <div class="col-lg-3 col-sm-6 my-2 form-check">
+                <input class="form-check-input" type="checkbox" name="observaciones" id="observaciones">
+                <label class="form-check-label" for="observaciones">Observaciones</label>
+            </div>
+          
+        </div>
+<!--
+            const filters = {
+
+                armador_filter,
+                cargador_filter,
+                capitan_filter,
+                buque_filter,
+                puerto_filter,
+                material_filter,
+                origen_filter,
+                destino_filter,
+
+            };
+-->
+        <div class="row pt-5 pb-2">Aplicar filtros (opcional):</div>
+        <div class="row">
+            <div class="col-lg-3  my-2">
+                <label for="min_date_filter" class="form-label">Desde</label>
+                <input type="date" class="form-control" name="min_date_filter" id="min_date_filter">
+            </div>
+            <div class="col-lg-3  my-2">
+                <label for="max_date_filter" class="form-label">Hasta</label>
+                <input type="date" class="form-control" name="max_date_filter" id="max_date_filter">
+            </div>
+            <div class="col-lg-3  my-2">
+                <label for="puerto_filter" class="form-label">Puerto</label>
+                <input type="text" class="form-control" name="puerto_filter" id="puerto_filter" oninput="getSuggestionsByFieldDebounced('{{apiSugerencias}}', 'puerto_filter', 'puerto', 'puerto_list');" list="puerto_list" >    
+                <datalist id="puerto_list"></datalist>
+            </div>
+            <div class="col-lg-3  my-2">
+                <label for="material_filter" class="form-label">Material</label>
+                <input type="text" class="form-control" name="material_filter" id="material_filter" oninput="getSuggestionsByFieldDebounced('{{apiSugerencias}}', 'material_filter', 'material', 'material_list');" list="material_list" >    
+                <datalist id="material_list"></datalist>
+            </div>
+            <div class="col-lg-6  my-2">
+                <label for="armador_filter" class="form-label">Armador</label>
+                <input type="text" class="form-control" name="armador_filter" id="armador_filter" oninput="getSuggestionsByFieldDebounced('{{apiSugerencias}}', 'armador_filter', 'armador_nombre', 'armador_list');" list="armador_list" >    
+                <datalist id="armador_list"></datalist>
+            </div>
+            <div class="col-lg-6  my-2">
+                <label for="cargador_filter" class="form-label">Cargador</label>
+                <input type="text" class="form-control" name="cargador_filter" id="cargador_filter" oninput="getSuggestionsByFieldDebounced('{{apiSugerencias}}', 'cargador_filter', 'cargador_nombre', 'cargador_list');" list="cargador_list" >    
+                <datalist id="cargador_list"></datalist>
+            </div>
+            <div class="col-lg-6  my-2">
+                <label for="buque_filter" class="form-label">Buque</label>
+                <input type="text" class="form-control" name="buque_filter" id="buque_filter" oninput="getSuggestionsByFieldDebounced('{{apiSugerencias}}', 'buque_filter', 'buque_nombre', 'buque_list');" list="buque_list" >    
+                <datalist id="buque_list"></datalist>
+            </div>
+            <div class="col-lg-6  my-2">
+                <label for="capitan_filter" class="form-label">Capitan</label>
+                <input type="text" class="form-control" name="capitan_filter" id="capitan_filter" oninput="getSuggestionsByFieldDebounced('{{apiSugerencias}}', 'capitan_filter', 'capitan', 'capitan_list');" list="capitan_list" >    
+                <datalist id="capitan_list"></datalist>
+            </div>
+            <div class="col-lg-6  my-2">
+                <label for="origen_filter" class="form-label">Origen</label>
+                <input type="text" class="form-control" name="origen_filter" id="origen_filter" oninput="getSuggestionsByFieldDebounced('{{apiSugerencias}}', 'origen_filter', 'origen', 'origen_list');" list="origen_list" >    
+                <datalist id="origen_list"></datalist>
+            </div>
+            <div class="col-lg-6  my-2">
+                <label for="destino_filter" class="form-label">Destino</label>
+                <input type="text" class="form-control" name="destino_filter" id="destino_filter" oninput="getSuggestionsByFieldDebounced('{{apiSugerencias}}', 'destino_filter', 'destino', 'destino_list');" list="destino_list" >    
+                <datalist id="destino_list"></datalist>
+            </div>
+        </div>
+
+        <div class="row justify-content-end">
+            <div class ="col-auto mt-5 mb-3">
+                <input type="submit" class="btn btn-primary" value="Generar">
+            </div>
+        </div>                     
+    </form>
+    </div>
+
+<!-- Funcionalidad propia -->
+<script src="/js/functions.js"></script>
+
+</main>

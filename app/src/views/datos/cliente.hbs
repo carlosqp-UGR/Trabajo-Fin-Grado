@@ -1,0 +1,109 @@
+<main class="container">
+    <h1 class="my-5 py-1">Datos de Cliente</h1>
+
+    {{#if create}}
+    <form action="{{target}}/add" method="POST">
+    {{else}}
+    <form {{#if edit}} action="{{target}}/edit/{{data.id}}" method="POST" {{/if}}>
+    {{/if}}
+
+        <div class="row justify-content-between mt-4 mb-3 py-2">
+            <div class="col-lg-6">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" name="nombre" id="nombre" value="{{data.nombre}}" {{#not (or edit create)}} readonly {{/not}} required>
+            </div>
+            <div class="col-lg-6">
+                <label for="tipo" class="form-label">Tipo</label>
+                <select class="form-select" name="tipo" id="tipo" {{#not (or edit create)}} disabled {{/not}}>
+                {{#each tipos}}
+                    <option value="{{this}}" {{#eq ../data.tipo this}} selected {{/eq}}>{{titleize this}}</option>
+                {{/each}}
+                </select>
+            </div>
+        </div>
+
+        <div class="row justify-content-between my-3 py-2">
+            <div class="col-lg-6">
+                <label for="cif" class="form-label">CIF</label>
+                <input type="text" class="form-control" name="cif" id="cif" value="{{data.cif}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+            <div class="col-lg-6">
+                <label for="vat" class="form-label">VAT</label>
+                <input type="text" class="form-control" name="vat" id="vat" value="{{data.vat}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+        </div>
+
+        <div class="row justify-content-between my-3 py-2">
+            <div class="col">
+                <!--
+                <label for="direccion" class="form-label">Direccion</label>
+                <input type="text" class="form-control" name="direccion" id="direccion" value="{{data.direccion}}" {{#not (or edit create)}} readonly {{/not}} required>
+                -->
+                <label for="direccion" class="form-label">Direccion</label>
+                <textarea class="form-control" name="direccion" id="direccion" rows="3" {{#not (or edit create)}} readonly {{/not}}>{{data.direccion}}</textarea>
+            </div>
+        </div>
+
+        <div class="row justify-content-between my-3 py-2">
+            <div class="col-lg-6">
+                <label for="pais" class="form-label">País</label>
+                <input type="text" class="form-control" name="pais" id="pais" oninput="getSuggestionsByFieldDebounced('{{api}}', 'pais', 'pais', 'pais_list');" list="pais_list" value="{{data.pais}}" {{#not (or edit create)}} readonly {{/not}}>    
+                <datalist id="pais_list"></datalist>
+            </div>
+            <div class="col-lg-6">
+                <label for="email" class="form-label">Email</label>
+                <input type="text" class="form-control" name="email" id="email" value="{{data.email}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+        </div>
+
+        <div class="row justify-content-between my-3 py-2">
+            <div class="col-lg-6">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input type="text" class="form-control" name="telefono" id="telefono" value="{{data.telefono}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+            <div class="col-lg-6">
+                <label for="fax" class="form-label">Fáx</label>
+                <input type="text" class="form-control" name="fax" id="fax" value="{{data.fax}}" {{#not (or edit create)}} readonly {{/not}}>
+            </div>
+        </div>
+
+        <div class="row justify-content-between my-3 py-2">
+            <div class="col">
+            <label for="observaciones" class="form-label">Observaciones</label>
+            <textarea class="form-control" name="observaciones" id="observaciones" rows="3" {{#not (or edit create)}} readonly {{/not}}>{{data.observaciones}}</textarea>
+            </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="row justify-content-end my-5">
+            {{#if create}}
+            <div class="col-auto">
+                <input type="button" class="btn btn-secondary" value="Cancelar" onclick="window.location.href='{{target}}'">
+            </div>
+            <div class="col-auto">
+                <input type="submit" class="btn btn-primary" value="Guardar">
+            </div>
+            {{else}}
+            {{#unless edit}}
+            <div class="col-auto">
+                <input type="button" class="btn btn-secondary" value="Volver" onclick="window.location.href='{{target}}'">
+            </div>
+            <div class="col-auto">
+                <input type="button" class="btn btn-primary" value="Editar" onclick="window.location.href='{{target}}/edit/{{data.id}}'">
+            </div>
+            {{else}}
+            <div class="col-auto"> <!-- Ajustar a la derecha --> 
+                <input type="button" class="btn btn-danger" value="Eliminar" onclick="confirmDeletion('{{target}}/delete/{{data.id}}')">
+            </div>
+            <div class="col-auto">
+                <input type="button" class="btn btn-secondary" value="Cancelar" onclick="window.location.href='{{target}}/get/{{data.id}}'">
+            </div>
+            <div class="col-auto">
+                <input type="submit" class="btn btn-primary" value="Guardar">
+            </div>
+            {{/unless}}
+            {{/if}}
+        </div>
+    </form>
+</main>
+<script src="/js/functions.js"></script>

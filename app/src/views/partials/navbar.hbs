@@ -1,0 +1,96 @@
+<header>
+    <!-- Componente: Menú principal "navbar" -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <!-- Logo -->
+        <a class="navbar-brand p-0 me-0 me-lg-2" href="#" aria-label="Andres Quesada e Hijos S.A. Logo">
+          <img src="/img/logo2-aqh-black.png" alt="logo" width="auto" height="80" class="d-block my-1" viewBox="0 0 118 94">
+        </a>
+
+        <!-- Boton expandir menu -->
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Opciones menu -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/">Inicio</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Datos
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/clientes">Clientes</a></li>
+                <li><a class="dropdown-item" href="/buques">Buques</a></li>
+                <li><a class="dropdown-item" href="/estancias-de-buques">Escalas</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Facturas
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/facturas/cuentas-escala">Cuentas de Escala (A)</a></li>
+                <li><a class="dropdown-item" href="/facturas/complementarias">Complementarias (B)</a></li>
+                <li><a class="dropdown-item" href="/facturas/carga">Carga o Descarga (C)</a></li>
+                <li><a class="dropdown-item" href="/facturas/genericas">Genéricas (AQH)</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Listados
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/listados/escalas">Escalas</a></li>
+                <li><a class="dropdown-item" href="/listados/facturas">Facturas</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Estadísticas
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/estadisticas/clientes">Clientes</a></li>
+                <li><a class="dropdown-item" href="/estadisticas/buques">Buques</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href='#footer'>Acerca de</a>
+            </li>
+          </ul>
+
+          <div class="navbar-nav ml-auto">
+          {{#if user}}
+            <div class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-person-circle"></i>
+                  {{user.fullname}} 
+              </a>
+              <div class="dropdown-menu dropdown-menu-end">
+                <a href="/perfil" class="dropdown-item"><i class="fa fa-user-o"></i> Perfil</a></a>
+                <a href="/perfil/change-password" class="dropdown-item"><i class="fa fa-sliders"></i>Cambiar Contraseña</a></a>
+                {{#if user.admin}}
+                <a href="/admin/usuarios" class="dropdown-item"><i class="fa fa-sliders"></i>Administrar usuarios</a></a>
+                {{/if}}
+                <div class="dropdown-divider"></div>
+                <a href="/logout" class="dropdown-item"><i class="bi bi-box-arrow-right"></i> Cerrar Sesion</a></a>
+              </div>
+            </div>
+          {{else}}
+            <div class="nav-item">
+              <a class="nav-link" href="/login" role="button">
+                <i class="bi bi-box-arrow-in-right"></i>
+                 Acceder
+                </a>
+            </div>
+          {{/if}}
+          </div>
+        </div>
+
+        </div>
+      </div>
+    </nav>
+</header>

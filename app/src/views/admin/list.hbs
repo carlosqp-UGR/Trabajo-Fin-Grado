@@ -1,0 +1,47 @@
+<main class="container p-4">
+    <div class="row justify-content-between">
+        <div class="col-auto text-start">
+            <h1 class="my-2">Listado de usuarios</h1>
+        </div>
+        <div class="col-auto mt-4 text-end">
+            <a class="btn btn-primary" href="/admin/usuarios/add">Alta de usuario</a>
+        </div> 
+    </div>
+
+    <div class="row">
+        {{#each usuarios}}
+        <div class="col-xl-4 my-4">
+            <div class="card">
+                <div class="card-body text-start">
+                    <form>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username:</label>
+                            <input type="text" id="username" class="form-control" value="{{this.username}}" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fullname" class="form-label">Nombre completo:</label>
+                            <input type="text" id="fullname" class="form-control" value="{{this.fullname}}" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="admin" class="form-label">Administrador:</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="admin" id="adminYes" value="si" {{#if this.admin}}checked{{else}}disabled{{/if}}>
+                                <label class="form-check-label" for="adminYes">Sí</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="admin" id="adminNo" value="no" {{#unless this.admin}}checked{{else}}disabled{{/unless}}>
+                                <label class="form-check-label" for="adminNo">No</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-end">
+                    <!-- Botones a la derecha -->
+                    <a class="btn btn-danger me-2" href="/admin/usuarios/delete/{{this.id}}">Eliminar</a>
+                    <a class="btn btn-primary" href="/admin/usuarios/edit/{{this.id}}">Editar</a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</main>

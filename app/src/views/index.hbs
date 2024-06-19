@@ -1,0 +1,108 @@
+<main class="container">
+
+<h1 class="my-5 py-1 ms-3">Bienvenido de vuelta, {{capitalize nombre}}</h1> 
+
+<style>
+    .card:hover {
+        background-color: #f0f0f0; /* Cambiar el color de fondo cuando el cursor pasa sobre la carta */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Añadir sombra cuando el cursor pasa sobre la carta */
+    }
+</style>
+
+  <div class="container my-5">
+    <div class="row">
+      <!-- Clientes -->
+      <div class="col-lg-4 py-4">
+        <div class="card">
+          <div class="img-wrapper d-flex justify-content-center mt-4 pt-4 mb-2 mb-2">
+            <img src="/img/imgs_idx/clientes.png" alt="Imagen de Buque" width="140" height="140">
+          </div>
+          <div class="card-body text-center">
+            <h5 class="card-title mb-3">Clientes</h5> <!-- Agregando "mb-3" para más espacio -->
+            <p class="card-text mb-4">Consulta, busca, añade o modifica la agenda de clientes.</p> <!-- Agregando "mb-4" para más espacio -->
+            <a href="/clientes" class="btn btn-primary d-inline-block">Ver Clientes</a> <!-- Añadí "d-inline-block" para centrar -->
+          </div>
+        </div>
+      </div>
+      <!-- Buques -->
+      <div class="col-lg-4 py-4">
+        <div class="card">
+          <div class="img-wrapper d-flex justify-content-center mt-4 pt-4 mb-2 mb-2">
+            <img src="/img/imgs_idx/buque.png" alt="Imagen de Buque" width="140" height="140">
+          </div>
+          <div class="card-body text-center">
+            <h5 class="card-title mb-3">Buques</h5> <!-- Agregando "mb-3" para más espacio -->
+            <p class="card-text mb-4">Consulta, busca, añade o modifica el registro de buques.</p> <!-- Agregando "mb-4" para más espacio -->
+            <a href="/buques" class="btn btn-primary d-inline-block">Ver Buques</a> <!-- Añadí "d-inline-block" para centrar -->
+          </div>
+        </div>
+      </div>
+      <!-- Estancias de Buques -->
+      <div class="col-lg-4 py-4">
+        <div class="card">
+          <div class="img-wrapper d-flex justify-content-center mt-4 pt-4 mb-2 mb-2">
+            <img src="/img/imgs_idx/carga.png" alt="Imagen de Buque" width="140" height="140">
+          </div>
+          <div class="card-body text-center">
+            <h5 class="card-title mb-3">Escalas</h5> <!-- Agregando "mb-3" para más espacio -->
+            <p class="card-text mb-4">Gestiona eficazmente los registros de escalas de buques.</p> <!-- Agregando "mb-4" para más espacio -->
+            <a href="/estancias-de-buques" class="btn btn-primary d-inline-block">Ver Escalas</a> <!-- Añadí "d-inline-block" para centrar -->
+          </div>
+        </div>
+      </div>
+      <!-- Facturas -->
+      <div class="col-lg-4 py-4">
+        <div class="card">
+          <div class="img-wrapper d-flex justify-content-center mt-4 pt-4 mb-2 mb-2">
+            <img src="/img/imgs_idx/facturas.png" alt="Imagen de Buque" width="140" height="140">
+          </div>
+          <div class="card-body text-center">
+            <h5 class="card-title mb-3">Facturas</h5> <!-- Agregando "mb-3" para más espacio -->
+            <p class="card-text mb-4">Busca, crea, modifica e imprime todo tipo de facturas.</p> <!-- Agregando "mb-4" para más espacio -->
+            <a href="/facturas/genericas" class="btn btn-primary d-inline-block">Ver Facturas</a> <!-- Añadí "d-inline-block" para centrar -->
+          </div>
+        </div>
+      </div>
+      <!-- Listados -->
+      <div class="col-lg-4 py-4">
+        <div class="card">
+          <div class="img-wrapper d-flex justify-content-center mt-4 pt-4 mb-2 mb-2">
+            <img src="/img/imgs_idx/listado.png" alt="Imagen de Listado" width="140" height="140">
+          </div>
+          <div class="card-body text-center">
+            <h5 class="card-title mb-3">Listados</h5> <!-- Agregando "mb-3" para más espacio -->
+            <p class="card-text mb-4"> Genera e imprime listados personalizados de escalas y facturas.</p> <!-- Agregando "mb-4" para más espacio -->
+            <a href="/listados/escalas" class="btn btn-primary d-inline-block">Ver Listados</a> <!-- Añadí "d-inline-block" para centrar -->
+          </div>
+        </div>
+      </div>
+      <!-- Estadisticas -->
+      <div class="col-lg-4 py-4">
+        <div class="card">
+          <div class="img-wrapper d-flex justify-content-center mt-4 pt-4 mb-2 mb-2">
+            <img src="/img/imgs_idx/estadisticas.png" alt="Imagen de Buque" width="140" height="140">
+          </div>
+          <div class="card-body text-center">
+            <h5 class="card-title mb-3">Estadísticas</h5> <!-- Agregando "mb-3" para más espacio -->
+            <p class="card-text mb-4"> Genera estadísticas y listados sobre buques, clientes, escalas y facturación.</p> <!-- Agregando "mb-4" para más espacio -->
+            <a href="/estadisticas/buques" class="btn btn-primary d-inline-block">Ver Estadísticas</a> <!-- Añadí "d-inline-block" para centrar -->
+          </div>
+        </div>
+      </div>
+      <!-- Mi perfil -->
+      <div class="col-lg-4 py-4">
+        <div class="card">
+          <div class="img-wrapper d-flex justify-content-center mt-4 pt-4 mb-2 mb-2">
+            <img src="/img/imgs_idx/perfil.png" alt="Imagen de Buque" width="140" height="140">
+          </div>
+          <div class="card-body text-center">
+            <h5 class="card-title mb-3">Perfil</h5> <!-- Agregando "mb-3" para más espacio -->
+            <p class="card-text mb-4">Visualiza y gestiona tus datos personales y contraseña de acceso.</p> <!-- Agregando "mb-4" para más espacio -->
+            <a href="/perfil" class="btn btn-primary d-inline-block">Ver Mi Perfil</a> <!-- Añadí "d-inline-block" para centrar -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>

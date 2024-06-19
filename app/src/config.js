@@ -12,6 +12,6 @@ export const database = {
 
 export const port = process.env.PORT || 80;
 
-export const PRODUCTION = process.env.PRODUCTION || true;
+export const production = process.env.PRODUCTION || true;
 
 export const SECRET = process.env.SECRET || 'mySecret';

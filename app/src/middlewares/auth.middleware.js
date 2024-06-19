@@ -1,4 +1,4 @@
-import { PRODUCTION as production } from "../config.js";
+import { production } from "../config.js";
 
 export const isLoggedIn = (req, res, next) => {
     if(!production) return next();

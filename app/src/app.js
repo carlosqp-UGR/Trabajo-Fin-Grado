@@ -15,7 +15,7 @@ import "./lib/passport.js";
 // import { pool } from "./database.js";
 
 import { errorHandler } from './middlewares/error.middleware.js';
-import { production } from './config.js';
+import { PRODUCTION as production } from './config.js';
 
 const app = express();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
